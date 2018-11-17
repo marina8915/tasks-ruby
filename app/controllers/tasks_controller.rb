@@ -1,16 +1,18 @@
+# frozen_string_literal: true
+
 require 'tasks'
+require 'home_controller'
 
 class TasksController < ApplicationController
   attr_reader :rez
-  TASKS = [1, 2, 3, 6]
 
-  def display
-
-  end
+  def task; end
 
   def result
     id = params[:id].to_i
-    @rez = if TASKS.include? id
+    @tasks_array = HomeController.new.tasks
+
+    @rez = if @tasks_array.include? id
            method = "task_#{id}"
            public_send(method)
            else

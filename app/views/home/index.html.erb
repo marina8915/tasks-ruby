@@ -1,6 +1,9 @@
 <h1>50 tasks</h1>
 
 <ol>
-  <il><a href="./tasks/1" >task_1</a></il>
-  <il><a href="./tasks/2" >task_1</a></il>
+  <% @tasks_num.each do |num| %>
+    <li>
+      <%= link_to "task #{num}", "./tasks/#{num}" %>
+    </li>
+  <% end %>
 </ol>

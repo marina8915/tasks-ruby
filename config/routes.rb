@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   get 'home/index'
 
-  get 'tasks/:id', to: 'tasks#display'
+  get 'tasks/:id', to: 'tasks#task'
   post 'tasks/result/:id', to: 'tasks#result'
 
   root 'home#index'
