@@ -1,0 +1,14 @@
+<p>Task <%= @id = params[:id] %></p>
+
+<% case @id
+    when '1', '2' %>
+  <%= form_tag("/tasks/result/#{@id}", method: "post") do %>
+    <%= label_tag(:number_a, "number_a") %>
+    <%= text_field_tag(:number_a) %>
+    <%= label_tag(:number_b, "number_b") %>
+    <%= text_field_tag(:number_b) %>
+    <%= submit_tag("Result") %>
+  <% end %>
+<% else %>
+  <h1>404</h1>
+<% end %>
