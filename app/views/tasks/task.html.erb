@@ -1,0 +1,9 @@
+<p>Task <%= @id %></p>
+<%= form_tag("/tasks/result/#{@id}", method: "post") do %>
+  <% @params.times do |num| %>
+    <% num += 1 %>
+    <%= label_tag("value_#{num}".to_sym, "value #{num}") %>
+    <%= text_field_tag("value_#{num}".to_sym) %>
+  <% end %>
+  <%= submit_tag("Result") %>
+<% end %>
