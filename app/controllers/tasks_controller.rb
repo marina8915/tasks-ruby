@@ -10,62 +10,50 @@ class TasksController < ApplicationController
     @id = task_path.delete '/tasks/'
     @id.to_i
 
-    @params = number_method_params(id: @id)
+    @params = number_method_params(id: @id).size
   end
 
   def result
     @tasks_array = HomeController.new.tasks
     @id = params[:id].to_i
+    result = read_result(@id)
     @rez = if @tasks_array.include? @id
              method = "task_#{id}"
-             public_send(method)
+             Tasks::Task.public_send(method, result)
            else
              '404'
            end
   end
 
   def number_method_params(id:)
-    Tasks::Task.method("task_#{id}").parameters.size
+    Tasks::Task.method("task_#{id}").parameters
   end
 
   def data_form(value)
-    params[value]
+    params[value].to_f
   end
 
-  def task_1
-    number_b = data_form('value_1').to_f
-    number_a = data_form('value_2').to_f
-    Tasks::Task.task_1(number_b: number_b, number_a: number_a)
+  def get_args(id)
+    number_method_params(id: id).map(&:last)
   end
 
-  def task_2
-    number_b = data_form('value_1').to_f
-    number_a = data_form('value_2').to_f
-    Tasks::Task.task_2(number_b: number_b, number_a: number_a)
+  def get_values(array)
+    value_array = []
+    array.each_index do |num|
+      num += 1
+      value = data_form("value_#{num}".to_sym)
+      value_array.push(value)
+    end
+    value_array
   end
 
-  def task_3
-    length = data_form('value_1').to_f
-    Tasks::Task.task_3(edge_length: length)
-  end
-
-  def task_6
-    cathetus_a = data_form('value_1').to_f
-    cathetus_b = data_form('value_2').to_f
-    Tasks::Task.task_6(cathetus_a: cathetus_a, cathetus_b: cathetus_b)
-  end
-
-  def task_8
-    n = data_form('value_1').to_f
-    radius = data_form('value_2').to_f
-    Tasks::Task.task_8(n_corners: n, radius: radius)
-  end
-
-  def task_606
-    side_a = data_form('value_1').to_f
-    side_b = data_form('value_2').to_f
-    side_c = data_form('value_1').to_f
-    side_d = data_form('value_2').to_f
-    Tasks::Task.task_606(side_a: side_a, side_b: side_b, side_c: side_c, side_d: side_d)
+  def read_result(id)
+    params_array = get_args(id)
+    value_array = get_values(params_array)
+    result = Hash.new({})
+    params_array.size.times do |elem|
+      result[params_array[elem]] = value_array[elem]
+    end
+    result
   end
 end
