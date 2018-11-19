@@ -15,7 +15,11 @@ class TasksController < ApplicationController
     @tasks_array = HomeController.new.tasks
     result = read_result
     @rez = if @tasks_array.include? id
-             Tasks::Task.public_send("task_#{id}", result)
+             if id == 328
+               Tasks::Task.public_send("task_#{id}")
+             else
+               Tasks::Task.public_send("task_#{id}", result)
+             end
            else
              '404'
            end
