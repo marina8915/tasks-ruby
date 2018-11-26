@@ -1,6 +1,7 @@
-<p>Task <%= @id %></p>
+<p><%= render_breadcrumbs %></p>
 
-<%= @conditions %>
+<p>Task <%= @id %></p>
+<p><%= @conditions %></p>
 
 <%= form_tag("/tasks/result/#{@id}", method: "post") do %>
   <% @params.each do |label| %>

@@ -1,9 +1,12 @@
 # frozen_string_literal: true
 
 require 'tasks'
+require 'breadcrumbs_on_rails'
 
 class TasksController < ApplicationController
   attr_reader :rez, :tasks_num
+
+  add_breadcrumb "home", :root_path
 
   def index
     all_tasks
@@ -24,12 +27,14 @@ class TasksController < ApplicationController
   end
 
   def result
+    add_breadcrumb "task #{id}", :task_path
     @tasks_array = all_tasks
     @rez = if @tasks_array.include? id
              if method_params.size.zero?
                Tasks::Task.public_send("task_#{id}")
              else
-               Tasks::Task.public_send("task_#{id}", read_form)
+               @data_form = read_form
+               Tasks::Task.public_send("task_#{id}", @data_form)
              end
            else
              '404'
