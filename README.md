@@ -1,24 +1,18 @@
-# README
+# Tasks Rails
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+50 tasks with [tasks_gem](https://rubygems.org/gems/tasks_gem)
 
-Things you may want to cover:
+* Ruby version 2.5.3
+* Rails version 5.2.1 
 
-* Ruby version
+### Installation
 
-* System dependencies
+Clone repository.
 
-* Configuration
+    $ bundle
+    
+### Usage
 
-* Database creation
+    $ rails s
 
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+Open http://localhost:PORT

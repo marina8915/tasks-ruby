@@ -41,6 +41,8 @@ class TasksController < ApplicationController
            end
   end
 
+  private
+
   def id
     @id = task_path.delete '/tasks/'
     @id.to_i
