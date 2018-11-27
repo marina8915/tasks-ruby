@@ -3,18 +3,10 @@
 require 'tasks'
 
 class TasksController < ApplicationController
-  attr_reader :rez, :tasks_num
+  attr_reader :rez, :all_tasks
 
   def index
-    all_tasks
-  end
-
-  def all_tasks
-    method_name = 'task_'
-    methods = Tasks::Task.methods(false)
-    @tasks_num = methods.select { |elem| elem.to_s.include? method_name }
-    @tasks_num.map! { |elem| elem.to_s.delete method_name }
-    @tasks_num.map!(&:to_i).sort!
+    @all_tasks = Tasks::Task.all_tasks
   end
 
   def task
