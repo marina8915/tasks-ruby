@@ -3,7 +3,7 @@
 <ol>
   <% @tasks_num.each do |num| %>
     <li>
-      <%= link_to "task #{num}", "./tasks/#{num}" %>
+      <%= link_to "task #{num}", task_path(num) %>
     </li>
   <% end %>
 </ol>

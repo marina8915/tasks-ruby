@@ -1,9 +1,9 @@
-<p><%= render_breadcrumbs %></p>
+<p><%= link_to "home", "/" %></p>
 
-<p>Task <%= @id %></p>
+<p>Task <%= params[:id] %></p>
 <p><%= @conditions %></p>
 
-<%= form_tag("/tasks/result/#{@id}", method: "post") do %>
+<%= form_tag("/tasks/result/#{params[:id]}", method: "post") do %>
   <% @params.each do |label| %>
     <%= label_tag(label, label) %>
     <%= text_field_tag(label) %>
