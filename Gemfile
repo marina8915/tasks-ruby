@@ -37,10 +37,8 @@ gem 'jbuilder', '~> 2.5'
 gem 'bootsnap', '>= 1.1.0', require: false
 
 # gem for 50 tasks and tests
-gem 'tasks_gem', git: 'https://github.com/marina8915/tasks_gem'
+gem 'tasks_gem', '~> 0.2.0'
 
-# breadcrumbs
-gem 'breadcrumbs_on_rails'
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]

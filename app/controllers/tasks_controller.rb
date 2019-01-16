@@ -1,55 +1,32 @@
 # frozen_string_literal: true
 
 require 'tasks'
-require 'breadcrumbs_on_rails'
 
 class TasksController < ApplicationController
-  attr_reader :rez, :tasks_num
-
-  add_breadcrumb "home", :root_path
+  attr_reader :rez, :all_tasks
 
   def index
-    all_tasks
-  end
-
-  def all_tasks
-    method_name = 'task_'
-    methods = Tasks::Task.methods(false)
-    @tasks_num = methods.select { |elem| elem.to_s.include? method_name }
-    @tasks_num.map! { |elem| elem.to_s.delete method_name }
-    @tasks_num.map!(&:to_i).sort!
+    @all_tasks = Tasks::Task.all_tasks
   end
 
   def task
-    id
     @params = method_params
-    @conditions = Tasks::Task.conditions(num: id)
+    @conditions = Tasks::Task.conditions(num: params[:id])
   end
 
   def result
-    add_breadcrumb "task #{id}", :task_path
-    @tasks_array = all_tasks
-    @rez = if @tasks_array.include? id
-             if method_params.size.zero?
-               Tasks::Task.public_send("task_#{id}")
-             else
-               @data_form = read_form
-               Tasks::Task.public_send("task_#{id}", @data_form)
-             end
+    @rez = if method_params.empty?
+             Tasks::Task.public_send("task_#{params[:id]}")
            else
-             '404'
+             @data_form = read_form
+             Tasks::Task.public_send("task_#{params[:id]}", @data_form)
            end
   end
 
   private
 
-  def id
-    @id = task_path.delete '/tasks/'
-    @id.to_i
-  end
-
   def method_params
-    Tasks::Task.method("task_#{id}").parameters.map(&:last)
+    Tasks::Task.method("task_#{params[:id]}").parameters.map(&:last)
   end
 
   def get_values(array)
@@ -61,12 +38,11 @@ class TasksController < ApplicationController
   end
 
   def read_form
-    params_array = method_params
-    value_array = get_values(params_array)
-    result = Hash.new({})
+    value_array = get_values(method_params)
+    result = {}
 
-    params_array.size.times do |elem|
-      result[params_array[elem]] = value_array[elem]
+    method_params.each_with_index do |_, index|
+      result[method_params[index]] = value_array[index]
     end
     result
   end
